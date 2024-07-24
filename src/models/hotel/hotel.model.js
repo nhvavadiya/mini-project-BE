@@ -8,11 +8,11 @@ export default (sequelize, Sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-      admin_id: {
+      user_id: {
         type: Sequelize.BIGINT.UNSIGNED,
         allowNull: false,
         references: {
-          model: "admins",
+          model: "users",
           key: "id",
         },
       },

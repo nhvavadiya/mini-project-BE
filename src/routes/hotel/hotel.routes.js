@@ -2,8 +2,8 @@ import { Router } from "express";
 const router = Router();
 
 import { hotelList } from "../../controllers/hotel/index.js";
-import { adminUserAuth } from "../../middleware/index.js";
+import { userAuth } from "../../middleware/index.js";
 
-router.get("/list", adminUserAuth, hotelList);
+router.get("/list", userAuth, hotelList);
 
 export default router;

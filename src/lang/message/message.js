@@ -7,13 +7,6 @@ const MESSAGES = {
   1006: "Please provide valid authorization token.",
   1007: "User Profile update successfully!",
 
-  2001: "Admin register successfully!",
-  2002: "Admin login successfully!",
-  2003: "Admin already exists!",
-  2004: "Admin not found!",
-  2005: "Your credentials does not match. please try again!",
-  2006: "Please provide authorization token.",
-
   3001: "Hotel list get successfully!",
   3002: "Hotel room list get successfully!",
   3003: "Hotel room-slot list get successfully!",

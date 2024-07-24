@@ -10,7 +10,7 @@ const roomSlotList = async (req, res) => {
     const { limit = 10, page_no = 1 } = req.query;
 
     const offset = Number(limit) * (Number(page_no) - 1);
-    let hotelRooms = await ROOMSLOT.findAll({
+    let slotList = await ROOMSLOT.findAll({
       where: {
         active: 1,
         room_id: id,
@@ -25,7 +25,7 @@ const roomSlotList = async (req, res) => {
       offset: offset,
     });
 
-    return successRes(res, 3002, hotelRooms);
+    return successRes(res, 3002, slotList);
   } catch (error) {
     console.log(error);
     return errorRes(res, 9000, error);

@@ -11,7 +11,7 @@ const userAuth = async (req, res, next) => {
     const { data } = await verifyJWT(token);
     if (data.userId) {
       req.body.user_id = data.userId;
-      let checkAdminExist = await USER.findOne({
+      let checkUserExist = await USER.findOne({
         where: {
           [db.Sequelize.Op.and]: [
             {
@@ -23,7 +23,7 @@ const userAuth = async (req, res, next) => {
           ],
         },
       });
-      if (!checkAdminExist) {
+      if (!checkUserExist) {
         return errorRes(res, 1006);
       }
     } else {

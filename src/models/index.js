@@ -24,8 +24,6 @@ db.sequelize = sequelize;
 
 import userModel from "../models/auth/user.model.js";
 import userSessionModel from "../models/auth/userSession.model.js";
-import adminModel from "../models/auth/admin.model.js";
-import adminSessionModel from "../models/auth/adminSession.model.js";
 import hotelModel from "./hotel/hotel.model.js";
 import roomModel from "./hotel/room.model.js";
 import roomSlotModel from "./hotel/slot.model.js";
@@ -34,8 +32,6 @@ import bookSlotModel from "./hotel/bookSlot.model.js";
 // Assuming sequelize and Sequelize are already defined
 db.user = userModel(sequelize, Sequelize);
 db.userSession = userSessionModel(sequelize, Sequelize);
-db.admin = adminModel(sequelize, Sequelize);
-db.adminSession = adminSessionModel(sequelize, Sequelize);
 db.hotel = hotelModel(sequelize, Sequelize);
 db.room = roomModel(sequelize, Sequelize);
 db.roomSlot = roomSlotModel(sequelize, Sequelize);
@@ -46,9 +42,6 @@ db.bookSlot = bookSlotModel(sequelize, Sequelize);
 db.user.hasMany(db.userSession, { foreignKey: "user_id" });
 db.userSession.belongsTo(db.user, { foreignKey: "user_id" });
 
-db.admin.hasMany(db.adminSession, { foreignKey: "admin_id" });
-db.adminSession.belongsTo(db.admin, { foreignKey: "admin_id" });
-
 db.hotel.hasMany(db.room, { foreignKey: "hotel_id" });
 db.room.belongsTo(db.hotel, { foreignKey: "hotel_id" });
 
@@ -58,8 +51,8 @@ db.roomSlot.belongsTo(db.room, { foreignKey: "room_id" });
 db.roomSlot.hasMany(db.bookSlot, { foreignKey: "room_id" });
 db.bookSlot.belongsTo(db.roomSlot, { foreignKey: "room_id" });
 
-db.admin.hasMany(db.hotel, { foreignKey: "admin_id" });
-db.hotel.belongsTo(db.admin, { foreignKey: "admin_id" });
+db.user.hasMany(db.hotel, { foreignKey: "user_id" });
+db.hotel.belongsTo(db.user, { foreignKey: "user_id" });
 
 db.user.hasMany(db.bookSlot, { foreignKey: "user_id" });
 db.bookSlot.belongsTo(db.user, { foreignKey: "user_id" });
@@ -74,13 +67,14 @@ const adminData = [
     email: "admin@gmail.com",
     password: "$2b$10$UXX0dtkjcw8OFQkhe1H43uICJWeCVL4zxngzYmnj54A1jrsTh9Yd.",
     phone_no: "1234567890",
+    role: "admin",
     active: 1,
   },
   // password : testtest
 ];
 const hotelData = [
   {
-    admin_id: 1,
+    user_id: 1,
     name: "Royal",
     description: "royal hotel",
     address: "45 asdads asdasd asdasd",
@@ -115,9 +109,9 @@ const roomSlotData = [
 ];
 
 db.sequelize.sync({ alter: true }).then(async () => {
-  await db.admin.count().then((count) => {
+  await db.user.count().then((count) => {
     if (count === 0) {
-      db.admin.bulkCreate(adminData);
+      db.user.bulkCreate(adminData);
     }
   });
   await db.hotel.count().then((count) => {

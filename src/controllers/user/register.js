@@ -12,6 +12,7 @@ const register = async (req, res) => {
       first_name: "required",
       email: "required",
       password: "required",
+      role: "required",
     });
 
     if (validation.fails()) {
@@ -19,7 +20,7 @@ const register = async (req, res) => {
       return errorRes(res, validation.errors.first(firstMessage));
     }
 
-    let { email, first_name, last_name, password, phone_no } = req.body;
+    let { email, first_name, last_name, password, phone_no, role } = req.body;
     const checkUserExist = await USER.isExistField("email", email);
     if (checkUserExist) {
       return errorRes(res, 1003);
@@ -29,9 +30,10 @@ const register = async (req, res) => {
     let data = {
       first_name: first_name ? first_name : "",
       last_name: last_name ? last_name : "",
-      email: email ? email : "",
+      email: email,
       password: encryptedPass,
       phone_no: phone_no ? phone_no : "",
+      role: role,
     };
     let user = await USER.create(data);
     let token = await USERSESSION.createToken(user.id);

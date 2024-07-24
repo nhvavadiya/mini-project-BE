@@ -28,6 +28,14 @@ export default (sequelize, Sequelize) => {
         type: Sequelize.BIGINT(20),
         allowNull: true,
       },
+      role: {
+        type: Sequelize.ENUM("admin", "user"),
+        allowNull: false,
+      },
+      socket_id: {
+        type: Sequelize.STRING(200),
+        allowNull: true,
+      },
       active: {
         type: Sequelize.INTEGER(2),
         allowNull: false,
