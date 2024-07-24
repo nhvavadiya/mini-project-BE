@@ -3,6 +3,8 @@ import http from "http";
 import fs from "fs";
 import config from "./src/config/config.js";
 import app from "./src/app.js";
+import { Server } from "socket.io";
+import { socket } from "./src/socket/index.js";
 
 // Check for protocol
 let server;
@@ -17,6 +19,13 @@ if (config.protocol === "https") {
 } else {
   server = http.createServer(app);
 }
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+await socket(io);
 
 server.listen(config.port, () => {
   console.log(`server is listening on port ${config.port}`);
