@@ -42,11 +42,11 @@ export const bookSlot = async (data) => {
       throw { status: false, message: "Slot already booked." };
     }
 
-    // const BookSlot = await BOOKSLOT.create({
-    //   slot_id,
-    //   room_id,
-    //   user_id,
-    // });
+    const BookSlot = await BOOKSLOT.create({
+      slot_id,
+      room_id,
+      user_id,
+    });
 
     response = {
       status: true,
